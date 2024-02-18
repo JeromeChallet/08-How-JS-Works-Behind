@@ -1,5 +1,7 @@
 "use strict";
 
+/*
+//Scoping In practice
 // calcAge is in the Global Scope
 function calcAge(birthYear) {
   const age = 2037 - birthYear;
@@ -49,3 +51,65 @@ calcAge(1986);
 //here age and printAge are out of scope
 console.log(age);
 printAge();
+*/
+
+//Hoisting and TDZ
+//hoisting with variables
+console.log(me); //undefined
+//job and year are still in the TDZ
+//ref error cannot access before initializaiton
+console.log(job);
+console.log(year);
+
+var me = "jerome";
+let job = "engineer";
+const year = 1986;
+
+//hoisting with functions
+
+console.log(addDeclaration(2, 3)); //returns 5
+//addExpression and addArrow are still in the TDZ
+//ref error cannot access before initializaiton
+console.log(addExpression(2, 3));
+console.log(addArrow(2, 3));
+
+//function declaration
+function addDeclaration(a, b) {
+  return a + b;
+}
+
+//function expression
+//if using a var instead of const we get another error
+//addExpression is not a function error
+const addExpression = function (a, b) {
+  return a + b;
+};
+
+//arrow function
+//if using a var instead of const we get another error
+//addArrow is not a function error
+const addArrow = (a, b) => a + b;
+
+//example
+//because of hoisting, numProduts is undefined
+//and therefore will execute deleteShoppingCart()
+//it's a hard to find bug so be carefull with that
+//this would not be an issue if numProduts was a const instead of a var
+if (!numProduts) deleteShoppingCart();
+
+var numProduts = 10;
+
+function deleteShoppingCart() {
+  console.log("all products deleted");
+}
+
+//In the browser console, "window" lets you look at the global
+//Variables declared with let or const do not create properties in the window object
+var x = 1; // will be seen
+let y = 2; // wont be seen
+const z = 3; // wont be seen
+
+//testing is a variable is a property of the window obj
+console.log(x === window.x);
+console.log(y === window.y);
+console.log(z === window.z);
