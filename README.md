@@ -5,3 +5,5 @@ tdz
 "window" command
 this keyword
 method borrowing
+self
+arguments keyword
