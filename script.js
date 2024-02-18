@@ -53,6 +53,7 @@ console.log(age);
 printAge();
 */
 
+/*
 //Hoisting and TDZ
 //hoisting with variables
 console.log(me); //undefined
@@ -113,3 +114,47 @@ const z = 3; // wont be seen
 console.log(x === window.x);
 console.log(y === window.y);
 console.log(z === window.z);
+*/
+
+//This Keyword
+console.log(this); //shows theh window obj
+
+const calcAge = function (birthYear) {
+  console.log(2037 - birthYear);
+  console.log(this); // undefined in slopy mode
+};
+//regular funciton call
+calcAge(1986);
+
+const calcAgeArrow = (birthYear) => {
+  console.log(2037 - birthYear);
+  //in a arrow func, this always points to the parrent scope
+  console.log(this); // shows theh window obj
+};
+calcAgeArrow(1986);
+
+const jerome = {
+  year: 1986,
+  calcAge: function () {
+    //the this keyword does not point to jerome obj because its his parent
+    //it does so because jerome obj is the one calling the method
+    console.log(this); //jerome obj
+    console.log(2037 - this.year);
+  },
+};
+jerome.calcAge();
+
+const matilda = {
+  year: 2017,
+};
+
+//method borrowing is copying the calcAge method from jerome to matilda
+//this will show the matilda obj in the browser console
+matilda.calcAge = jerome.calcAge;
+matilda.calcAge();
+
+//copying the function into a new variable
+const f = jerome.calcAge;
+//f function is just a regular function call
+//it is not attached to any obj therefore making this undefined
+f(); // this will be undefined
