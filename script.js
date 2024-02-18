@@ -116,6 +116,7 @@ console.log(y === window.y);
 console.log(z === window.z);
 */
 
+/*
 //This Keyword
 console.log(this); //shows theh window obj
 
@@ -158,3 +159,54 @@ const f = jerome.calcAge;
 //f function is just a regular function call
 //it is not attached to any obj therefore making this undefined
 f(); // this will be undefined
+*/
+
+//Regular Function VS Arrow Function
+//mistake 1: arrow function as a method
+var firstName = 'matilda'
+const jerome = {
+  firstName: 'Challet',
+  year: 1986,
+  calcAge: function () {
+    console.log(this); //jerome obj
+    console.log(2037 - this.year);
+
+    //mistake 2: function inside a method
+    //cannot read property 'year' of undefined
+    // aregular funciton call has this keyword set to undefined
+    //solution 1: replae the followng this with self
+    //this will make sure the self/this will go up the parent scope which is calcAge
+    // const self = this;
+    // const isMillenial = function(){
+    //   console.log(self); // undefined
+    //   console.log(self.year >= 1981 && self.year <= 1996);
+    // }
+
+    //solution 2: use an arrow function
+    const isMillenial = () => {
+      console.log(this); // undefined
+      console.log(this.year >= 1981 && this.year <= 1996);
+    }
+    isMillenial();
+  },
+  greet: () => console.log(`hey ${this.firstName}`);
+};
+//matilda because this parent scope is the global one
+//the reason being the parent block is an object literal not a code block
+//this is something to be carefull about
+//therefore never ever use an arrow function as a method
+jerome.greet(); //hey matilda
+jerome.calcAge(); 
+
+//each regular function get an argument keyword
+const addExpression = function (a,b){
+  console.log(arguments);
+  return a +b; 
+}
+addExpression(2,5);
+addExpression(2,5,8,12);
+
+var addArrow = (a,b) => {
+  console.log(arguments); //arguments is not defined
+  return a+b};
+  addArrow(2,5,8)
