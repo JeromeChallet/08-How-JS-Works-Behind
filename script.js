@@ -161,6 +161,7 @@ const f = jerome.calcAge;
 f(); // this will be undefined
 */
 
+/*
 //Regular Function VS Arrow Function
 //mistake 1: arrow function as a method
 var firstName = 'matilda'
@@ -210,3 +211,76 @@ var addArrow = (a,b) => {
   console.log(arguments); //arguments is not defined
   return a+b};
   addArrow(2,5,8)
+  */
+
+//Primitives VS Objects
+/*
+let age = 37;
+let oldAge = age;
+age = 31;
+console.log(age); // 31
+console.log(oldAge); // 38
+
+const me = {
+  name: "jerome",
+  age: 30,
+};
+const friend = me;
+friend.age = 27;
+console.log("Friend", friend); // age=27
+console.log("me", me); // age=27
+*/
+
+//primitive types
+//here each primitive value gets saved into its own piece of memory in the call stack
+let lastName = "williams";
+let oldLastName = lastName;
+lastName = "davis";
+console.log(lastName, oldLastName); // williams and davis
+
+//reference types
+const jessica = {
+  firstName: "jessica",
+  lastName: "williams",
+  age: 27,
+};
+
+//behind the scene we are just copying the reference of the call stack
+//to the same object in the heap
+const marriedJessica = jessica;
+//we are only changing the value in the heap here
+//it has nothing to do with const or let
+marriedJessica.lastName = "davis";
+console.log("before marriage", jessica); //jessica and davis
+console.log("after marriage", marriedJessica); //jessica and davis
+
+//now we assign a new object to married jessica
+//with a constant you cannot change the value in the call stack, aka the memory address
+//marriedJessica = {}; // this is not allowed
+
+//copying object
+const jessica2 = {
+  firstName: "jessica",
+  lastName: "williams",
+  age: 27,
+  family: ["alice", "bob"],
+};
+
+//merges 2 obj to create a new one
+//meaning jessicaCopy is a real copy in the heap not just ref the same obj in the call stack
+//object.assign only works on the 1st level, it only creates a shallow copy
+//because we have an obj inside an obj, this inner obj will still be the same
+//it will still point to the same place in memory
+const jessicaCopy = Object.assign({}, jessica2);
+jessicaCopy.lastName = "davis";
+console.log("before marriage", jessica2); // jessica williams
+console.log("after marriage", jessicaCopy); // jessica davis
+
+//here we are manipulating an obj with an obj
+//family array/obj in obj jessica2
+jessicaCopy.family.push("mary");
+jessicaCopy.family.push("john");
+
+//both jessica2 and jessicaCopy have the array of family
+console.log("before marriage", jessica2); //mary and john are present
+console.log("after marriage", jessicaCopy); //mary and john are present
